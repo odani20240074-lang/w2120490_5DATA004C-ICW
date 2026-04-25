@@ -192,7 +192,7 @@ fig_bottom = px.bar(
     y="country",
     orientation="h",
     color="value",
-    color_continuous_scale="Reds", 
+    color_continuous_scale="Tealgrn", 
     text_auto=".1f",
     title=f"Bottom {bottom_n} Countries"
 )
@@ -203,7 +203,6 @@ fig_bottom.update_layout(
 )
 
 st.plotly_chart(fig_bottom, use_container_width=True)
-
 
 # Chart 4 - Trend line
 st.subheader("📈 Sanitation Trend Over Time")
@@ -250,3 +249,52 @@ fig_cont = px.bar(
     text_auto=".1f"
 )
 st.plotly_chart(fig_cont, use_container_width=True)
+
+
+# Chart 7 - Global Sanitation Distribution (Overall)
+st.subheader("Global Sanitation Distribution (Overall)")
+
+def classify(val):
+    if val >= 75:
+        return "High (75–100%)"
+    elif val >= 50:
+        return "Medium (50–75%)"
+    elif val >= 25:
+        return "Low (25–50%)"
+    else:
+        return "Critical (0–25%)"
+
+# 👇 filter by selected year from sidebar
+df_year = df[df["year"] == year].copy()
+
+df_year["category"] = df_year["value"].apply(classify)
+
+df_pie_chart = df_year["category"].value_counts().reset_index()
+df_pie_chart.columns = ["Category", "Count"]
+
+fig_pie = px.pie(
+    df_pie_chart,
+    names="Category",
+    values="Count",
+    hole=0.55,  # donut style
+    title=f"Global Sanitation Distribution ({year})",
+    color_discrete_sequence=[
+        "#0ea5e9",  # High
+        "#38bdf8",  # Medium
+        "#60a5fa",  # Low
+        "#1e3a8a"   # Critical
+    ]
+)
+
+fig_pie.update_traces(
+    textinfo="percent+label",
+    pull=[0.03, 0.03, 0.03, 0.03]
+)
+
+fig_pie.update_layout(
+    height=500,
+    margin=dict(l=20, r=20, t=50, b=20),
+    title_font_size=18
+)
+
+st.plotly_chart(fig_pie, use_container_width=True)
