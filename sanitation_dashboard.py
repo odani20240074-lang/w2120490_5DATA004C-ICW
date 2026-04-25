@@ -169,3 +169,24 @@ fig_map.update_traces(
 
 st.plotly_chart(fig_map, use_container_width=True)
 
+# Chart 2 - Trend line
+st.subheader("📈 Sanitation Trend Over Time")
+
+df_trend = df[
+    (df["country"].isin(selected_countries)) &
+    (df["area_type"] == area_type)
+]
+
+fig_line = px.line(df_trend, x="year", y="value", color="country")
+st.plotly_chart(fig_line, use_container_width=True)
+
+# Chart 3 - Top 10 Countries
+st.subheader("🏆 Top Countries")
+
+top_n = st.slider("Top N Countries", 5, 30, 10, key="top_n")
+
+df_top = df_filtered.nlargest(top_n, "value")
+
+fig_top = px.bar(df_top, x="value", y="country", orientation="h", color="value")
+st.plotly_chart(fig_top, use_container_width=True)
+
