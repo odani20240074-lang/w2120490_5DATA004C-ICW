@@ -229,3 +229,24 @@ df_gap = df[
 fig_gap = px.line(df_gap, x="year", y="value", color="area_type")
 st.plotly_chart(fig_gap, use_container_width=True)
 
+# Chart 6 - Continent Analysis
+st.subheader("🌎 Continent Analysis")
+
+df_cont = df[df["area_type"] == area_type].copy()
+df_cont["continent"] = df_cont["country"].map(continent_map)
+df_cont = df_cont.dropna(subset=["continent"])
+
+df_cont = df_cont[df_cont["year"] == year]
+
+df_cont = df_cont.groupby("continent")["value"].mean().reset_index()
+df_cont = df_cont.sort_values("value", ascending=False)
+
+fig_cont = px.bar(
+    df_cont,
+    x="continent",
+    y="value",
+    color="value",
+    color_continuous_scale="Blues",
+    text_auto=".1f"
+)
+st.plotly_chart(fig_cont, use_container_width=True)
