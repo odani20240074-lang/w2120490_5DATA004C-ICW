@@ -97,3 +97,29 @@ df_filtered = df[
 
 df_filtered["continent"] = df_filtered["country"].map(continent_map)
 
+# KPI Metrics
+st.subheader("📊 Key Metrics")
+
+avg = df_filtered["value"].mean()
+highest = df_filtered.nlargest(1, "value").iloc[0]
+lowest = df_filtered.nsmallest(1, "value").iloc[0]
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric(
+    "🌍 Global Average",
+    f"{avg:.1f}%"
+)
+
+col2.metric(
+    "🏆 Highest Coverage",
+    highest["country"],
+    f"{highest['value']:.1f}%"
+)
+
+col3.metric(
+    "⚠️ Lowest Coverage",
+    lowest["country"],
+    f"{lowest['value']:.1f}%"
+)
+
