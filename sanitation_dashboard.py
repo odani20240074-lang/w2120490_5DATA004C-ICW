@@ -264,7 +264,7 @@ def classify(val):
     else:
         return "Critical (0–25%)"
 
-# 👇 filter by selected year from sidebar
+
 df_year = df[df["year"] == year].copy()
 
 df_year["category"] = df_year["value"].apply(classify)
@@ -276,13 +276,13 @@ fig_pie = px.pie(
     df_pie_chart,
     names="Category",
     values="Count",
-    hole=0.55,  # donut style
+    hole=0.55,  
     title=f"Global Sanitation Distribution ({year})",
     color_discrete_sequence=[
-        "#0ea5e9",  # High
-        "#38bdf8",  # Medium
-        "#60a5fa",  # Low
-        "#1e3a8a"   # Critical
+        "#0ea5e9", 
+        "#38bdf8", 
+        "#60a5fa", 
+        "#1e3a8a" 
     ]
 )
 
