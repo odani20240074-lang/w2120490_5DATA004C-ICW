@@ -123,3 +123,49 @@ col3.metric(
     f"{lowest['value']:.1f}%"
 )
 
+# Chart 1 - World Map
+st.subheader("🗺️ World Map")
+
+df_map = df[
+    (df["area_type"] == area_type) &
+    (df["year"] == year)
+]
+
+fig_map = px.choropleth(
+    df_map,
+    locations="country_code",
+    color="value",
+    hover_name="country",
+    color_continuous_scale="Blues",
+    range_color=(0, 100)
+)
+
+fig_map.update_layout(
+    geo=dict(
+        projection_type=projection,
+
+        showframe=False,
+        showcoastlines=True,
+        showcountries=True,
+        showland=True,
+        landcolor="#1f2937",
+        oceancolor="#0b1220",
+        showocean=True,
+        bgcolor="#0b1220"
+    ),
+
+    paper_bgcolor="#0b1220",
+    plot_bgcolor="#0b1220",
+
+    font=dict(color="white"),
+    height=600,
+    margin=dict(l=0, r=0, t=40, b=0)
+)
+
+fig_map.update_traces(
+    marker_line_color="rgba(255,255,255,0.2)",
+    marker_line_width=0.4
+)
+
+st.plotly_chart(fig_map, use_container_width=True)
+
