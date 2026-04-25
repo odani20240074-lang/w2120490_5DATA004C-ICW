@@ -169,7 +169,43 @@ fig_map.update_traces(
 
 st.plotly_chart(fig_map, use_container_width=True)
 
-# Chart 2 - Trend line
+# Chart 2 - Top 10 Countries
+st.subheader("🏆 Top Countries")
+
+top_n = st.slider("Top N Countries", 5, 30, 10, key="top_n")
+
+df_top = df_filtered.nlargest(top_n, "value")
+
+fig_top = px.bar(df_top, x="value", y="country", orientation="h", color="value")
+st.plotly_chart(fig_top, use_container_width=True)
+
+# Chart 3 - Bottom 10 Countries
+st.subheader("⚠️ Bottom Countries")
+
+bottom_n = st.slider("Bottom N Countries", 5, 30, 10, key="bottom_n")
+
+df_bottom = df_filtered.nsmallest(bottom_n, "value")
+
+fig_bottom = px.bar(
+    df_bottom,
+    x="value",
+    y="country",
+    orientation="h",
+    color="value",
+    color_continuous_scale="Reds", 
+    text_auto=".1f",
+    title=f"Bottom {bottom_n} Countries"
+)
+
+fig_bottom.update_layout(
+    plot_bgcolor="rgba(0,0,0,0)",
+    paper_bgcolor="rgba(0,0,0,0)"
+)
+
+st.plotly_chart(fig_bottom, use_container_width=True)
+
+
+# Chart 4 - Trend line
 st.subheader("📈 Sanitation Trend Over Time")
 
 df_trend = df[
@@ -180,13 +216,4 @@ df_trend = df[
 fig_line = px.line(df_trend, x="year", y="value", color="country")
 st.plotly_chart(fig_line, use_container_width=True)
 
-# Chart 3 - Top 10 Countries
-st.subheader("🏆 Top Countries")
-
-top_n = st.slider("Top N Countries", 5, 30, 10, key="top_n")
-
-df_top = df_filtered.nlargest(top_n, "value")
-
-fig_top = px.bar(df_top, x="value", y="country", orientation="h", color="value")
-st.plotly_chart(fig_top, use_container_width=True)
 
