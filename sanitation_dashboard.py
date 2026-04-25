@@ -216,4 +216,16 @@ df_trend = df[
 fig_line = px.line(df_trend, x="year", y="value", color="country")
 st.plotly_chart(fig_line, use_container_width=True)
 
+# Chart 5 - Rural vs Urban Gap
+st.subheader("🏘️ Rural vs Urban Gap")
+
+selected_country = st.selectbox("Select Country", countries, key="gap_country")
+
+df_gap = df[
+    (df["country"] == selected_country) &
+    (df["area_type"].isin(["Rural area", "Urban area"]))
+]
+
+fig_gap = px.line(df_gap, x="year", y="value", color="area_type")
+st.plotly_chart(fig_gap, use_container_width=True)
 
