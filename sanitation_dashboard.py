@@ -221,7 +221,7 @@ df_gap = df[
 ]
 
 fig_gap = px.line(df_gap, x="year", y="value", color="area_type")
-st.plotly_chart(fig_gap, use_container_width=True)
+st.plotly_chart(fig_gap, width="stretch", key="chart_rural_urban_gap")
 
 # Chart 6 - Continent Analysis
 st.subheader("🌎 Continent Analysis")
@@ -243,8 +243,7 @@ fig_cont = px.bar(
     color_continuous_scale="Blues",
     text_auto=".1f"
 )
-st.plotly_chart(fig_cont, use_container_width=True)
-
+st.plotly_chart(fig_cont, width="stretch", key="chart_continent_analysis")
 
 # Chart 7 - Global Sanitation Distribution (Overall)
 st.subheader("Global Sanitation Distribution (Overall)")
