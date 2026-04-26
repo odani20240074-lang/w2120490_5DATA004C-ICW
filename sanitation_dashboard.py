@@ -169,42 +169,6 @@ fig_map.update_traces(
 
 st.plotly_chart(fig_map, use_container_width=True)
 
-<<<<<<< HEAD
-# Chart 2 - Top 10 Countries
-st.subheader("🏆 Top Countries")
-
-top_n = st.slider("Top N Countries", 5, 30, 10, key="top_n")
-
-df_top = df_filtered.nlargest(top_n, "value")
-
-fig_top = px.bar(df_top, x="value", y="country", orientation="h", color="value")
-st.plotly_chart(fig_top, use_container_width=True)
-
-# Chart 3 - Bottom 10 Countries
-st.subheader("⚠️ Bottom Countries")
-
-bottom_n = st.slider("Bottom N Countries", 5, 30, 10, key="bottom_n")
-
-df_bottom = df_filtered.nsmallest(bottom_n, "value")
-
-fig_bottom = px.bar(
-    df_bottom,
-    x="value",
-    y="country",
-    orientation="h",
-    color="value",
-    color_continuous_scale="Tealgrn", 
-    text_auto=".1f",
-    title=f"Bottom {bottom_n} Countries"
-)
-
-fig_bottom.update_layout(
-    plot_bgcolor="rgba(0,0,0,0)",
-    paper_bgcolor="rgba(0,0,0,0)"
-)
-
-st.plotly_chart(fig_bottom, use_container_width=True)
-=======
 # Chart 2 & 3 - Top and Bottom Countries (side by side)
 col_top, col_bot = st.columns(2)
 
@@ -234,7 +198,6 @@ with col_bot:
         paper_bgcolor="rgba(0,0,0,0)"
     )
     st.plotly_chart(fig_bottom, use_container_width=True)
->>>>>>> Dashboard
 
 # Chart 4 - Trend line
 st.subheader("📈 Sanitation Trend Over Time")
@@ -258,11 +221,7 @@ df_gap = df[
 ]
 
 fig_gap = px.line(df_gap, x="year", y="value", color="area_type")
-<<<<<<< HEAD
-st.plotly_chart(fig_gap, use_container_width=True)
-=======
 st.plotly_chart(fig_gap, width="stretch", key="chart_rural_urban_gap")
->>>>>>> Dashboard
 
 # Chart 6 - Continent Analysis
 st.subheader("🌎 Continent Analysis")
@@ -284,12 +243,7 @@ fig_cont = px.bar(
     color_continuous_scale="Blues",
     text_auto=".1f"
 )
-<<<<<<< HEAD
-st.plotly_chart(fig_cont, use_container_width=True)
-
-=======
 st.plotly_chart(fig_cont, width="stretch", key="chart_continent_analysis")
->>>>>>> Dashboard
 
 # Chart 7 - Global Sanitation Distribution (Overall)
 st.subheader("Global Sanitation Distribution (Overall)")
@@ -337,8 +291,4 @@ fig_pie.update_layout(
     title_font_size=18
 )
 
-<<<<<<< HEAD
 st.plotly_chart(fig_pie, use_container_width=True)
-=======
-st.plotly_chart(fig_pie, use_container_width=True)
->>>>>>> Dashboard
